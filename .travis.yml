@@ -1,4 +1,28 @@
 language: c
+services:
+    - docker
+
+matrix:
+    include:
+        - env: ITEST_TARGET=itest_xenial
+        - env: ITEST_TARGET=itest_bionic
+        - env: ITEST_TARGET=itest_buster
+        - env: ITEST_TARGET=itest_tox
+        - os: linux-ppc64le
+          env: ITEST_TARGET=itest_buster
+        - arch: arm64
+          env: ITEST_TARGET=itest_buster
+        - arch: s390x
+          env: ITEST_TARGET=itest_buster
+    allow_failures:
+        - os: linux-ppc64le
+          env: ITEST_TARGET=itest_buster
+        - arch: arm64
+          env: ITEST_TARGET=itest_buster
+        - arch: s390x
+          env: ITEST_TARGET=itest_buster
+
 
 script:
-  - make
+   - echo ${ITEST_TARGET} ${TRAVIS_OS_NAME}
+   - make
